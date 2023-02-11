@@ -1,0 +1,48 @@
+name: payload.bin output *.img
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+  workflow_dispatch:
+    inputs:
+      ROM_URL:
+        description: 'ROM_URL'
+        required: true
+        default: 'https://hugeota.d.miui.com/V14.0.2.0.TGACNXM/miui_THYME_V14.0.2.0.TGACNXM_7b4df32800_13.0.zip'
+      ZIP_NAME:
+        description: 'ZIP_NAME'
+        required: true
+        default: 'miui_THYME_V14.0.2.0.TGACNXM_7b4df32800_13.0.zip'
+      IMG_NAME:
+        description: 'system/product/boot'
+        required: true
+        default: 'boot'  
+      
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Configuration Environment‌‌
+        run: |
+          sudo apt-get install -y  wget zip unzip
+          sudo chmod +x payload-dumper-go
+      
+      - name: Download ROM‌‌ and Unzip ROM to Get payload.bin
+        run: |
+          wget ${{ github.event.inputs.ROM_URL }}
+          unzip ${{ github.event.inputs.ZIP_NAME }}
+          mkdir img
+          ./payload-dumper-go -output \img -p ${{ github.event.inputs.IMG_NAME }} payload.bin
+      
+      - name: Upload All APK
+        uses: actions/upload-artifact@v3
+        with:
+          name: img
+          path: ./img/*.img
+      
