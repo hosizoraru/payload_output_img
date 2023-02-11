@@ -12,10 +12,6 @@ on:
         description: '完整包下载链接'
         required: true
         default: 'https://hugeota.d.miui.com/V14.0.2.0.TGACNXM/miui_THYME_V14.0.2.0.TGACNXM_7b4df32800_13.0.zip'
-      ZIP_NAME:
-        description: '完整包名字'
-        required: true
-        default: 'miui_THYME_V14.0.2.0.TGACNXM_7b4df32800_13.0'
       IMG_NAME:
         description: '你要拆的分区(比如 boot/init_boot/system/product)'
         required: true
@@ -36,7 +32,7 @@ jobs:
       - name: Download ROM‌‌ and Unzip ROM to Get payload.bin
         run: |
           wget ${{ github.event.inputs.ROM_URL }}
-          unzip ${{ github.event.inputs.ZIP_NAME }}.zip
+          unzip *.zip
           mkdir img
           ./payload-dumper-go -output \img -p ${{ github.event.inputs.IMG_NAME }} payload.bin
       
