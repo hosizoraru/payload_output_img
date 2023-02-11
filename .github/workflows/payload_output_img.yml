@@ -9,15 +9,15 @@ on:
   workflow_dispatch:
     inputs:
       ROM_URL:
-        description: 'ROM_URL'
+        description: '完整包下载链接'
         required: true
         default: 'https://hugeota.d.miui.com/V14.0.2.0.TGACNXM/miui_THYME_V14.0.2.0.TGACNXM_7b4df32800_13.0.zip'
       ZIP_NAME:
-        description: 'ZIP_NAME'
+        description: '完整包名字'
         required: true
         default: 'miui_THYME_V14.0.2.0.TGACNXM_7b4df32800_13.0.zip'
       IMG_NAME:
-        description: 'system/product/boot/init_boot'
+        description: '你要拆的分区(比如 boot/init_boot/system/product)'
         required: true
         default: 'boot'  
       
