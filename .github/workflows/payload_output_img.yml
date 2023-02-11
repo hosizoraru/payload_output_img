@@ -36,9 +36,9 @@ jobs:
       - name: Download ROM‌‌ and Unzip ROM to Get payload.bin
         run: |
           wget ${{ github.event.inputs.ROM_URL }}
-          unzip ${{ github.event.inputs.ZIP_NAME }}
+          unzip ${{ github.event.inputs.ZIP_NAME }}.zip
           mkdir img
-          ./payload-dumper-go -output \img -p ${{ github.event.inputs.IMG_NAME }}.img payload.bin
+          ./payload-dumper-go -output \img -p ${{ github.event.inputs.IMG_NAME }} payload.bin
       
       - name: Upload img
         uses: actions/upload-artifact@v3
