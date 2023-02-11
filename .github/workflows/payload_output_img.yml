@@ -29,10 +29,16 @@ jobs:
           sudo apt-get install -y  wget zip unzip
           sudo chmod +x payload-dumper-go
       
-      - name: Download ROM‌‌ and Unzip ROM to Get payload.bin
+      - name: Download ROM‌‌
         run: |
           wget ${{ github.event.inputs.ROM_URL }}
+      
+      - name: Unzip ROM to Get payload.bin
+        run: |
           unzip *.zip
+      
+      - name: from payload.bin to get img
+        run: |
           mkdir img
           ./payload-dumper-go -output \img -p ${{ github.event.inputs.IMG_NAME }} payload.bin
       
