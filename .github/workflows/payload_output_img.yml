@@ -17,7 +17,7 @@ on:
         required: true
         default: 'miui_THYME_V14.0.2.0.TGACNXM_7b4df32800_13.0.zip'
       IMG_NAME:
-        description: 'system/product/boot'
+        description: 'system/product/boot/init_boot'
         required: true
         default: 'boot'  
       
@@ -40,9 +40,9 @@ jobs:
           mkdir img
           ./payload-dumper-go -output \img -p ${{ github.event.inputs.IMG_NAME }} payload.bin
       
-      - name: Upload All APK
+      - name: Upload img
         uses: actions/upload-artifact@v3
         with:
-          name: img
+          name: ${{ github.event.inputs.IMG_NAME }}.img
           path: ./img/*.img
       
