@@ -1,0 +1,44 @@
+name: old devices output *.img
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+  workflow_dispatch:
+    inputs:
+      ROM_URL:
+        description: '完整包下载链接'
+        required: true
+        default: 'https://hugeota.d.miui.com/V14.0.2.0.TGACNXM/miui_THYME_V14.0.2.0.TGACNXM_7b4df32800_13.0.zip'
+      IMG_NAME:
+        description: '你要拆的分区(比如 boot/init_boot/system/product)'
+        required: true
+        default: 'boot'  
+      
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Configuration Environment‌‌
+        run: |
+          sudo apt-get install -y  wget zip unzip
+      
+      - name: Download ROM‌‌
+        run: |
+          wget ${{ github.event.inputs.ROM_URL }}
+      
+      - name: Unzip ROM to *.img
+        run: |
+          unzip *.zip
+      
+      - name: Upload img
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ github.event.inputs.IMG_NAME }}.img
+          path: ./${{ github.event.inputs.IMG_NAME }}.img
+      
