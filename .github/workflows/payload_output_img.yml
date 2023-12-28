@@ -26,12 +26,12 @@ jobs:
       
       - name: Configuration Environment‌‌
         run: |
-          sudo apt-get install -y  wget zip unzip
+          sudo apt-get install -y zip unzip aria2
           sudo chmod +x payload-dumper-go
       
       - name: Download ROM‌‌
         run: |
-          wget ${{ github.event.inputs.ROM_URL }}
+          aria2c ${{ github.event.inputs.ROM_URL }}
       
       - name: Unzip ROM to Get payload.bin
         run: |
